@@ -36,8 +36,8 @@ public class NotesControllerAdd extends HttpServlet {
 		//usuario maestro
 		if(currentUser.getEmail().equals("jmedinaa@unsa.edu.pe")){
 			
-			Query query4 = pm.newQuery(model.entity.User.class);
-			List<model.entity.User> students = (List<model.entity.User>)query4.execute("select from User where nameRole == 'alumno'");
+			String query4 = "select from " + model.entity.User.class.getName() + " where nameRole == 'estudiante'";
+			List<model.entity.User> students = (List<model.entity.User>)pm.newQuery(query4).execute();
 			req.setAttribute("students", students);
 			
 			Query query5 = pm.newQuery(model.entity.Course.class);
@@ -46,7 +46,7 @@ public class NotesControllerAdd extends HttpServlet {
 			
 			try {
 				req.getRequestDispatcher("/WEB-INF/Views/Notes/add.jsp").forward(req, resp);
-				query4.closeAll();
+				query5.closeAll();
 			
 			} catch (ServletException e) {
 				
@@ -89,8 +89,8 @@ public class NotesControllerAdd extends HttpServlet {
 					}
 					else{
 						
-						Query query4 = pm.newQuery(model.entity.User.class);
-						List<model.entity.User> students = (List<model.entity.User>)query4.execute("select from User where nameRole == 'alumno'");
+						String query4 = "select from " + model.entity.User.class.getName() + " where nameRole == 'estudiante'";
+						List<model.entity.User> students = (List<model.entity.User>)pm.newQuery(query4).execute();
 						req.setAttribute("students", students);
 						
 						Query query5 = pm.newQuery(model.entity.Course.class);
@@ -99,7 +99,7 @@ public class NotesControllerAdd extends HttpServlet {
 						
 						try {
 							req.getRequestDispatcher("/WEB-INF/Views/Notes/add.jsp").forward(req, resp);
-							query4.closeAll();
+							query5.closeAll();
 						
 						} catch (ServletException e) {
 							

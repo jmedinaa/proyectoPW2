@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -38,9 +37,9 @@ public class CoursesControllerEdit extends HttpServlet{
 				model.entity.Course course = pm.getObjectById(model.entity.Course.class,idLong);
 				req.setAttribute("course",course);
 				
-				//roles 
-				Query query4 = pm.newQuery(model.entity.User.class);
-				List<model.entity.User> teachers = (List<model.entity.User>)query4.execute("select from User where nameRole == 'profesor'");
+				//teachers 
+				String query5 = "select from " + model.entity.User.class.getName() + " where nameRole == 'profesor'";
+				List<model.entity.User> teachers = (List<model.entity.User>)pm.newQuery(query5).execute();
 				req.setAttribute("teachers", teachers);
 				
 				req.getRequestDispatcher("/WEB-INF/Views/Courses/edit.jsp").forward(req, resp);
@@ -94,8 +93,8 @@ public class CoursesControllerEdit extends HttpServlet{
 							req.setAttribute("course",course);
 							
 							//roles 
-							Query query4 = pm.newQuery(User.class);
-							List<User> teachers = (List<User>)query4.execute("select from User where nameRole == 'profesor'");
+							String query5 = "select from " + model.entity.User.class.getName() + " where nameRole == 'profesor'";
+							List<model.entity.User> teachers = (List<model.entity.User>)pm.newQuery(query5).execute();
 							req.setAttribute("teachers", teachers);
 							
 							req.getRequestDispatcher("/WEB-INF/Views/Courses/edit.jsp").forward(req, resp);

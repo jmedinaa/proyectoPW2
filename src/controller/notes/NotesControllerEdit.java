@@ -37,8 +37,8 @@ public class NotesControllerEdit extends HttpServlet{
 				req.setAttribute("note",note);
 				
 				
-				Query query4 = pm.newQuery(model.entity.User.class);
-				List<model.entity.User> students = (List<model.entity.User>)query4.execute("select from User where nameRole == 'alumno'");
+				String query4 = "select from " + model.entity.User.class.getName() + " where nameRole == 'estudiante'";
+				List<model.entity.User> students = (List<model.entity.User>)pm.newQuery(query4).execute();
 				req.setAttribute("students", students);
 				
 				Query query5 = pm.newQuery(model.entity.Course.class);
@@ -95,8 +95,8 @@ public class NotesControllerEdit extends HttpServlet{
 							req.setAttribute("note",note);
 							
 							
-							Query query4 = pm.newQuery(model.entity.User.class);
-							List<model.entity.User> students = (List<model.entity.User>)query4.execute("select from User where nameRole == 'alumno'");
+							String query4 = "select from " + model.entity.User.class.getName() + " where nameRole == 'estudiante'";
+							List<model.entity.User> students = (List<model.entity.User>)pm.newQuery(query4).execute();
 							req.setAttribute("students", students);
 							
 							Query query5 = pm.newQuery(model.entity.Course.class);

@@ -14,7 +14,6 @@ import com.google.appengine.api.users.UserServiceFactory;
 import controller.PMF;
 
 import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
 import model.entity.*;
 
 @SuppressWarnings("serial")
@@ -34,14 +33,13 @@ public class CoursesControllerAdd extends HttpServlet {
 	else{
 		//usuario maestro
 		if(currentUser.getEmail().equals("jmedinaa@unsa.edu.pe")){
-			
-			Query query4 = pm.newQuery(model.entity.User.class);
-			
-			List<model.entity.User> teachers = (List<model.entity.User>)query4.execute("select from User where nameRole == 'profesor'");
+			String query5 = "select from " + model.entity.User.class.getName() + " where nameRole == 'profesor'";
+			List<model.entity.User> teachers = (List<model.entity.User>)pm.newQuery(query5).execute();
+		
 			req.setAttribute("teachers", teachers);
 			try {
 				req.getRequestDispatcher("/WEB-INF/Views/Courses/add.jsp").forward(req, resp);
-				query4.closeAll();
+				
 			
 			} catch (ServletException e) {
 				
@@ -86,13 +84,13 @@ public class CoursesControllerAdd extends HttpServlet {
 						
 						
 
-						Query query4 = pm.newQuery(model.entity.User.class);
-						
-						List<model.entity.User> teachers = (List<model.entity.User>)query4.execute("select from User where nameRole == 'profesor'");
+						String query5 = "select from " + model.entity.User.class.getName() + " where nameRole == 'profesor'";
+						List<model.entity.User> teachers = (List<model.entity.User>)pm.newQuery(query5).execute();
+					
 						req.setAttribute("teachers", teachers);
 						try {
 							req.getRequestDispatcher("/WEB-INF/Views/Courses/add.jsp").forward(req, resp);
-							query4.closeAll();
+							
 						
 						} catch (ServletException e) {
 							
