@@ -3,6 +3,7 @@ package controller.citations;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -76,7 +77,7 @@ public class CitationsControllerAdd extends HttpServlet{
 	}
 	}
 	
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		
 		//Realizar la persistencia
 	String name = req.getParameter("name");
@@ -87,10 +88,25 @@ public class CitationsControllerAdd extends HttpServlet{
 	PersistenceManager pm = PMF.get().getPersistenceManager();
 	try{
 		pm.makePersistent(citation);
+		@SuppressWarnings("unchecked")
+		List<model.entity.User> users=(List<model.entity.User>)pm.newQuery("select from "+ model.entity.User.class.getName()).execute();
+		List<String> emails =new ArrayList<String>();
+		
+		for(model.entity.User u: users){
+			emails.add(u.getEmail());
+		
 		}
+		User currentUser = UserServiceFactory.getUserService().getCurrentUser();
+		String asunto=type+" de: "+currentUser.getEmail();
+		Email.enviarCorreo("currentUser" , emails,description , asunto);
+		}
+	catch(Exception e){
+		System.out.println("errs "+e);
+	}
 	finally{
 		pm.close();
 	}
+		
 		resp.sendRedirect("/citations");
     }
 	
