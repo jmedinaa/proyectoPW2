@@ -98,7 +98,7 @@ public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOEx
 		}
 		User currentUser = UserServiceFactory.getUserService().getCurrentUser();
 		String asunto=type+" de: "+currentUser.getEmail();
-		Email.enviarCorreo("currentUser" , emails,description , asunto);
+		Email.enviarCorreo(currentUser.getEmail() , emails,description , asunto);
 		}
 	catch(Exception e){
 		System.out.println("errs "+e);
